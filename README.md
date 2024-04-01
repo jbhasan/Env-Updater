@@ -12,7 +12,7 @@ composer require sayeed/env-updater
 
 ## Uses
 
--   Login URL: <you-application>/env-updater
+-   Login URL: {you-application}/env-updater
 -   Just login and update ENV file
 -   Every update is logged
 
