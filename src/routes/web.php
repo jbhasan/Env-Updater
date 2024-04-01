@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/install', [\Sayeed\ApplicationInstaller\Http\Controllers\InstallController::class, 'index']);
-Route::post('/install/check-requirements', [\Sayeed\ApplicationInstaller\Http\Controllers\InstallController::class, 'checkServer']);
-Route::post('/install/check-connection', [\Sayeed\ApplicationInstaller\Http\Controllers\InstallController::class, 'checkConnection']);
-Route::post('/install/check-smtp-connection', [\Sayeed\ApplicationInstaller\Http\Controllers\InstallController::class, 'checkSmtpConnection']);
-Route::post('/install/process', [\Sayeed\ApplicationInstaller\Http\Controllers\InstallController::class, 'process']);
-Route::post('/install/migrate', [\Sayeed\ApplicationInstaller\Http\Controllers\InstallController::class, 'runMigration']);
+Route::get('/env-updater', [\Sayeed\EnvUpdater\Http\Controllers\EnvUpdaterController::class, 'envPermission']);
+Route::post('/env-updater', [\Sayeed\EnvUpdater\Http\Controllers\EnvUpdaterController::class, 'envPermissionUpdate']);
+Route::get('/env-updater/logout', [\Sayeed\EnvUpdater\Http\Controllers\EnvUpdaterController::class, 'envPermissionLogout']);
+Route::get('/env-updater/edit', [\Sayeed\EnvUpdater\Http\Controllers\EnvUpdaterController::class, 'showEnv']);
+Route::post('/env-updater/update', [\Sayeed\EnvUpdater\Http\Controllers\EnvUpdaterController::class, 'updateEnv']);

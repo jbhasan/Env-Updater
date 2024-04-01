@@ -1,8 +1,6 @@
 {
-    "name": "sayeed/application-installer",
-    "description": "Application Installer For User",
-    "keywords": ["installer"],
-    "type": "library",
+    "name": "sayeed/env-updater",
+    "description": "Env Updater For User",
     "license": "MIT",
     "authors": [
         {
@@ -16,13 +14,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Sayeed\\ApplicationInstaller\\": "src/"
+            "Sayeed\\EnvUpdater\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Sayeed\\ApplicationInstaller\\ApplicationInstallerServiceProvider"
+                "Sayeed\\EnvUpdater\\Providers\\EnvUpdaterServiceProvider"
             ]
         }
     },

@@ -1,36 +1,23 @@
-# Laravel Application Installer
+# ENV Updater
 
-Laravel Application Installer for User
+Laravel Application's ENV file Updater
 
 ## Installation
+
 You can install the package via composer:
 
 ```shell
-composer require sayeed/application-installer
+composer require sayeed/env-updater
 ```
 
-After installation need to publish vendor
-```shell
-php artisan vendor:publish --provider="Sayeed\ApplicationInstaller\ApplicationInstallerServiceProvider"
-```
+## Uses
 
-## Screenshots
-
-#### Step 1
-![Installer Step 1](https://user-images.githubusercontent.com/20739060/127758077-9685f001-28a2-4661-9bbf-bf3f8cca4d48.png)
-
-#### Step 2
-![Installer Step 2](https://user-images.githubusercontent.com/20739060/127758111-37e86714-6093-49bc-83c6-ae3a3e2a8e05.png)
-
-#### Step 3
-![Installer Step 3](https://user-images.githubusercontent.com/20739060/127758127-6593fcd7-318b-43fb-a206-82addea8f9ab.png)
-
-#### Done
-![Installer Step 3](https://user-images.githubusercontent.com/20739060/127761499-240980cb-37af-47ed-a8de-f657c7cb257c.png)
-
+-   Login URL: <you-application>/env-updater
+-   Just login and update ENV file
+-   Every update is logged
 
 ## Credits
 
-- [Md. Hasan Sayeed](https://github.com/jbhasan)
+-   [Md. Hasan Sayeed](https://github.com/jbhasan)
 
- Thank you for using it.
+Thank you for using it.
