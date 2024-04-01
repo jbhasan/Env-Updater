@@ -14,11 +14,15 @@ class EnvUpdaterController extends Controller
 	{
 		$this->middleware(function($request, $next){
 			$envPermission = storage_path($this->permissionFile);
-			$envPermissionData = file_get_contents($envPermission);
-			$envPermissionData = json_decode($envPermissionData, true);
-			if(isset($envPermissionData['user-agent']) && $envPermissionData['user-agent'] == base64_encode($request->header('User-Agent')) && isset($envPermissionData['expired']) && $envPermissionData['expired'] > date('Y-m-d H:i:s')) {
-				$this->logged_user = $envPermissionData;
-				return $next($request);
+			if(file_exists($envPermission)) {
+				$envPermissionData = file_get_contents($envPermission);
+				$envPermissionData = json_decode($envPermissionData, true);
+				if(isset($envPermissionData['user-agent']) && $envPermissionData['user-agent'] == base64_encode($request->header('User-Agent')) && isset($envPermissionData['expired']) && $envPermissionData['expired'] > date('Y-m-d H:i:s')) {
+					$this->logged_user = $envPermissionData;
+					return $next($request);
+				} else {
+					return redirect('/env-updater');
+				}
 			} else {
 				return redirect('/env-updater');
 			}
@@ -26,10 +30,12 @@ class EnvUpdaterController extends Controller
 	}
 	public function envPermission(Request $request) {
 		$envPermission = storage_path($this->permissionFile);
-		$envPermissionData = file_get_contents($envPermission);
-		$envPermissionData = json_decode($envPermissionData, true);
-		if(isset($envPermissionData['user-agent']) && $envPermissionData['user-agent'] == base64_encode($request->header('User-Agent')) && isset($envPermissionData['expired']) && $envPermissionData['expired'] > date('Y-m-d H:i:s')) {
-			return redirect('/env-updater/edit')->with('success', 'Already logged in');
+		if(file_exists($envPermission)) {
+			$envPermissionData = file_get_contents($envPermission);
+			$envPermissionData = json_decode($envPermissionData, true);
+			if(isset($envPermissionData['user-agent']) && $envPermissionData['user-agent'] == base64_encode($request->header('User-Agent')) && isset($envPermissionData['expired']) && $envPermissionData['expired'] > date('Y-m-d H:i:s')) {
+				return redirect('/env-updater/edit')->with('success', 'Already logged in');
+			}
 		}
 		return view('env_updater::permission-env');
 	}
