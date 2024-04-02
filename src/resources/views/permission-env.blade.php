@@ -69,7 +69,10 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-end text-secondary mt-3"><a href="https://github.com/jbhasan">@ Sayeed</a></p>
+                    <div class="mt-3 d-flex justify-content-between">
+						<div>ENV Updater <small class="text-muted">{{ $version }}</small></div>
+						<a class="text-end text-secondary" href="https://github.com/jbhasan">&copy; Sayeed</a>
+					</div>
                 </div>
             </div>
         </div>

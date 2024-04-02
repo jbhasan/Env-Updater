@@ -10,8 +10,10 @@ class EnvUpdaterController extends Controller
 	public $permissionFile = 'framework/env-permission';
 	public $permissionHistoryFile = 'framework/env-permission-history';
 	public $logged_user = [];
+	public $version;
 	public function __construct()
 	{
+		$this->version = $this->getPackageVersion('sayeed/env-updater');
 		$this->middleware(function($request, $next){
 			$envPermission = storage_path($this->permissionFile);
 			if(file_exists($envPermission)) {
@@ -28,6 +30,19 @@ class EnvUpdaterController extends Controller
 			}
 		}, ['except' => ['envPermission', 'envPermissionUpdate']]);
 	}
+	protected function getPackageVersion($packageName)
+    {
+        $file = base_path().'/composer.lock';
+        $packages = json_decode(file_get_contents($file), true)['packages'];
+        foreach ($packages as $package) {
+            if ($package['name'] == $packageName) {
+                return $package['version'];
+            }
+        }
+        
+        return null;
+    }
+
 	public function envPermission(Request $request) {
 		$envPermission = storage_path($this->permissionFile);
 		if(file_exists($envPermission)) {
@@ -37,7 +52,8 @@ class EnvUpdaterController extends Controller
 				return redirect('/env-updater/edit')->with('success', 'Already logged in');
 			}
 		}
-		return view('env_updater::permission-env');
+		$version = $this->version;
+		return view('env_updater::permission-env', compact('version'));
 	}
 	public function envPermissionUpdate(Request $request) {
 		try {
@@ -77,7 +93,15 @@ class EnvUpdaterController extends Controller
 			$file_content = file_get_contents($env_file_path);
 			$file_name = '.env';
 
-			return view('env_updater::update-env', compact('file_content', 'file_name'));
+			$permissionHistoryFile = storage_path($this->permissionHistoryFile);
+			$permissionHistoryFileData = [];
+			if(file_exists($permissionHistoryFile)) {
+				$permissionHistoryFileData = file_get_contents($permissionHistoryFile);
+				$permissionHistoryFileData = json_decode($permissionHistoryFileData, true);
+			}
+
+			$version = $this->version;
+			return view('env_updater::update-env', compact('file_content', 'file_name', 'permissionHistoryFileData', 'version'));
 		}
 	}
 	public function updateEnv(Request $request) {
@@ -99,9 +123,10 @@ class EnvUpdaterController extends Controller
 				}
 				$permissionHistoryFileData[] = [
 					'email' => $this->logged_user['email'],
-					'mobile' => $this->logged_user['email'],
+					'mobile' => $this->logged_user['mobile'],
 					'prev_data' => base64_encode($file_content),
 					'new_data' => base64_encode($edited_data),
+					'changed_at' => date('Y-m-d H:i:s')
 				];
 				file_put_contents($permissionHistoryFile, json_encode($permissionHistoryFileData));
 
