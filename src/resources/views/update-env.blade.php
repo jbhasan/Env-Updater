@@ -152,10 +152,15 @@
 				lineNumbers: false,
 				mode: "text/x-csrc",
 				highlightDifferences: highlight,
+				showDifferences: true,
 				connect: connect,
 				collapseIdentical: true,
 				revertButtons: false,
-				allowEditing: false
+				allowEditingOriginals: false,
+				disableInput: true,
+				dragDrop: false,
+				fixedGutter: false,
+				theme: 'duotone-light'
 			});
 		}
 		function toggleDifferences() {
@@ -168,6 +173,9 @@
 			orig2 = value2;
 			initUI(viewId+'_'+index);
 			let d = document.createElement("div"); d.style.cssText = "width: 50px; margin: 7px; height: 14px"; dv.editor().addLineWidget(57, d)
+			setTimeout(function() {
+				$(".CodeMirror-merge-collapsed-widget").trigger('click');
+			}, 500);
 		};
 
 		function mergeViewHeight(mergeView) {

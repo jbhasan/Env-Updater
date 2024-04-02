@@ -99,6 +99,7 @@ class EnvUpdaterController extends Controller
 				$permissionHistoryFileData = file_get_contents($permissionHistoryFile);
 				$permissionHistoryFileData = json_decode($permissionHistoryFileData, true);
 			}
+			$permissionHistoryFileData = array_reverse($permissionHistoryFileData);
 
 			$version = $this->version;
 			return view('env_updater::update-env', compact('file_content', 'file_name', 'permissionHistoryFileData', 'version'));
